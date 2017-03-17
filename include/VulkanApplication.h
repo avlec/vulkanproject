@@ -24,10 +24,10 @@ public:
 
 		// Simple program life cycle
 	void initialize();
+	void deInitialize();
 	void prepare();
 	void update();
-	void render();
-	void deInitialize();
+	bool render();
 
 private:
 	// Create the Vulkan instance object

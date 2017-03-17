@@ -26,6 +26,44 @@ VulkanApplication* VulkanApplication::GetInstance()
 	return instance.get();
 }
 
+void VulkanApplication::initialize()
+{
+	char title[] = "Hello world.";
+	// Create the vulkan instance with specified layer extension names.
+	createVulkanInstance(layerNames, instanceExtensionNames, title);
+
+	// Get the list of physical devices on the system
+	std::vector<VkPhysicalDevice> gpuList;
+	enumeratePhysicalDevices(gpuList);
+
+	// This example uses only one device which is available first
+	if (gpuList.size() > 0) {
+		handShakeWithDevice(&gpuList[0], layerNames, deviceExtensionNames);
+	}
+}
+
+void VulkanApplication::deInitialize()
+{
+	deviceObj->destroyDevice();
+	instanceObj.destroyInstance();
+}
+
+void VulkanApplication::prepare()
+{
+	// Placeholder
+}
+
+void VulkanApplication::update()
+{
+	// Placeholder
+}
+
+bool VulkanApplication::render()
+{
+	// Placeholder
+	return true;
+}
+
 VkResult VulkanApplication::createVulkanInstance(std::vector<const char *> & layers, std::vector<const char *> & extensions, const char * appName)
 {
 	return instanceObj.createInstance(layers, extensions, appName);
@@ -33,7 +71,30 @@ VkResult VulkanApplication::createVulkanInstance(std::vector<const char *> & lay
 
 VkResult VulkanApplication::handShakeWithDevice(VkPhysicalDevice * gpu, std::vector<const char*> & layers, std::vector<const char*> & extensions)
 {
-	return VkResult();
+	// The user define Vulkan Device object will manage the
+	// Physical and logical device and their queue properties
+	deviceObj = new VulkanDevice(gpu);
+	if (!deviceObj) {
+		return VK_ERROR_OUT_OF_HOST_MEMORY;
+	}
+
+	// Print the devices available layer and their extension
+	deviceObj->layerExtension.getDeviceExtensionProperties(gpu);
+
+	// Get the physical device or GPU properties
+	vkGetPhysicalDeviceProperties(*gpu, &deviceObj->gpuProperties);
+	
+	// Get the memory properties from the physical device or GPU
+	vkGetPhysicalDeviceMemoryProperties(*gpu, &deviceObj->memoryProperties);
+
+	// Query the available queues on the physical device and their properties
+	deviceObj->getPhysicalDeviceQueuesAndProperties();
+
+	// Retrieve the queue which support graphics pipeline.
+	deviceObj->getGraphicsQueueHandle();
+
+	// Create logical device, ensures that this device connects to graphics queue
+	return deviceObj->createDevice(layers, extensions);
 }
 
 VkResult VulkanApplication::enumeratePhysicalDevices(std::vector<VkPhysicalDevice> & gpuList)
@@ -49,6 +110,7 @@ VkResult VulkanApplication::enumeratePhysicalDevices(std::vector<VkPhysicalDevic
 	gpuList.resize(gpuDeviceCount);
 	// Get physical device object
 	result = vkEnumeratePhysicalDevices(instanceObj.instance, &gpuDeviceCount, gpuList.data());
+	assert(result == VK_SUCCESS);
 
 	return result;
 }

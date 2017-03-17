@@ -5,7 +5,7 @@
 
 class VulkanDevice {
 public:
-	VulkanDevice(VkPhysicalDevice * gpu);
+	VulkanDevice(VkPhysicalDevice * physicalDevice);
 	~VulkanDevice();
 
 public:

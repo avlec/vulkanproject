@@ -1,7 +1,8 @@
 #include "..\include\VulkanDevice.h"
 
-VulkanDevice::VulkanDevice(VkPhysicalDevice * gpu)
+VulkanDevice::VulkanDevice(VkPhysicalDevice * physicalDevice)
 {
+	gpu = physicalDevice;
 }
 
 VulkanDevice::~VulkanDevice()
@@ -10,30 +11,34 @@ VulkanDevice::~VulkanDevice()
 
 VkResult VulkanDevice::createDevice(std::vector<const char*>& layers, std::vector<const char*>& extensions)
 {
+	layerExtension.appRequestedLayerNames =		layers;
+	layerExtension.appRequestedExtensionNames = extensions;
+
 	VkResult result;
-	float queuePriorities[1] = { 0.0 };
+	float queuePriorities[1] =					{ 0.0 };
 
 	// Create the object information
 	VkDeviceQueueCreateInfo queueInfo = {};
-	queueInfo.queueFamilyIndex =			graphicsQueueIndex;
-	queueInfo.sType =						VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-	queueInfo.pNext =						NULL;
-	queueInfo.queueCount =					1;
-	queueInfo.pQueuePriorities =			queuePriorities;
+	queueInfo.queueFamilyIndex =				graphicsQueueIndex;
+	queueInfo.sType =							VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+	queueInfo.pNext =							NULL;
+	queueInfo.queueCount =						1;
+	queueInfo.pQueuePriorities =				queuePriorities;
 
 	VkDeviceCreateInfo deviceInfo = {};
-	deviceInfo.sType =						VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-	deviceInfo.pNext =						NULL;
-	deviceInfo.queueCreateInfoCount =		1;
-	deviceInfo.pQueueCreateInfos =			&queueInfo;
-	deviceInfo.enabledLayerCount =			0;
+	deviceInfo.sType =							VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+	deviceInfo.pNext =							NULL;
+	deviceInfo.queueCreateInfoCount =			1;
+	deviceInfo.pQueueCreateInfos =				&queueInfo;
+	deviceInfo.enabledLayerCount =				0;
 	// Device layers are deprecated
-	deviceInfo.ppEnabledLayerNames =		NULL;
-	deviceInfo.enabledExtensionCount =		(uint32_t) extensions.size();
-	deviceInfo.ppEnabledExtensionNames =	extensions.data();
-	deviceInfo.pEnabledFeatures =			NULL;
+	deviceInfo.ppEnabledLayerNames =			NULL;
+	deviceInfo.enabledExtensionCount =			(uint32_t) extensions.size();
+	deviceInfo.ppEnabledExtensionNames =		extensions.data();
+	deviceInfo.pEnabledFeatures =				NULL;
 
 	result = vkCreateDevice(*gpu, &deviceInfo, NULL, &device);
+	assert(result == VK_SUCCESS);
 
 	return result;
 }
