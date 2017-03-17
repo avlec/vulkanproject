@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 3.7.1)
 
-set(Recipe_Name "3_0_DeviceHandshake")
+set(Recipe_Name "vulkanproject")
 
 # AUTO_LOCATE_VULKAN - accepted value ON or OFF
 # ON  - Use CMake to auto locate the Vulkan SDK.
