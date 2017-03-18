@@ -1,3 +1,8 @@
-##Vulkan Project
+## Vulkan Project
 
-This documents an idiot, learning vulkan from the ground up following along with the book _Learning Vulkan_ by Parminder Singh
+This documents an idiot, learning the ropes to the Vulkan API from the ground up, with **_zero_** understanding of the material, following along with the book _Learning Vulkan_ by _Parminder Singh_
+
+Currently working on getting the basic understanding of the Vulkan API, and of graphics API concepts.
+
+### Plans for this Project
+Spend time developing a functional Vulkan enviornment which will eventually turn into a platform to develop a program/game of sorts.
