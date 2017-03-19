@@ -16,8 +16,8 @@ public:
 	
 	// Functions for creation and deletion of vulkan instance
 	VkResult createInstance(std::vector<const char *> & layers,
-		std::vector<const char *> & extensions,
-		const char * appName);
+							std::vector<const char *> & extensions,
+							const char * appName);
 
 	// Destroy Vulkan Instance
 	void destroyInstance();

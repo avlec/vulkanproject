@@ -19,8 +19,8 @@ VkResult VulkanDevice::createDevice(std::vector<const char*>& layers, std::vecto
 
 	// Create the object information
 	VkDeviceQueueCreateInfo queueInfo = {};
-	queueInfo.queueFamilyIndex =				graphicsQueueIndex;
 	queueInfo.sType =							VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+	queueInfo.queueFamilyIndex =				graphicsQueueIndex;
 	queueInfo.pNext =							NULL;
 	queueInfo.queueCount =						1;
 	queueInfo.pQueuePriorities =				queuePriorities;
@@ -34,7 +34,7 @@ VkResult VulkanDevice::createDevice(std::vector<const char*>& layers, std::vecto
 	// Device layers are deprecated
 	deviceInfo.ppEnabledLayerNames =			NULL;
 	deviceInfo.enabledExtensionCount =			(uint32_t) extensions.size();
-	deviceInfo.ppEnabledExtensionNames =		extensions.data();
+	deviceInfo.ppEnabledExtensionNames =		extensions.size() ? extensions.data() : NULL;
 	deviceInfo.pEnabledFeatures =				NULL;
 
 	result = vkCreateDevice(*gpu, &deviceInfo, NULL, &device);
@@ -94,5 +94,8 @@ uint32_t VulkanDevice::getGraphicsQueueHandle()
 			break;
 		}
 	}
+
+	assert(found);
+
 	return 0;
 }

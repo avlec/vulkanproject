@@ -12,6 +12,7 @@ VulkanApplication::VulkanApplication()
 	instanceObj.layerExtension.getInstanceLayerProperties();
 
 	deviceObj = NULL;
+	debugFlag = true;
 }
 
 
@@ -29,8 +30,14 @@ VulkanApplication* VulkanApplication::GetInstance()
 void VulkanApplication::initialize()
 {
 	char title[] = "Hello world.";
+
 	// Create the vulkan instance with specified layer extension names.
 	createVulkanInstance(layerNames, instanceExtensionNames, title);
+
+	// Check if the supplied layers are supported or not
+	if (debugFlag) {
+		instanceObj.layerExtension.areLayersSupported(layerNames);
+	}
 
 	// Get the list of physical devices on the system
 	std::vector<VkPhysicalDevice> gpuList;
@@ -45,6 +52,9 @@ void VulkanApplication::initialize()
 void VulkanApplication::deInitialize()
 {
 	deviceObj->destroyDevice();
+	if (debugFlag) {
+		instanceObj.layerExtension.destroyDebugReportCallback();
+	}
 	instanceObj.destroyInstance();
 }
 
@@ -105,6 +115,9 @@ VkResult VulkanApplication::enumeratePhysicalDevices(std::vector<VkPhysicalDevic
 	VkResult result;
 	// Gets the gpu count
 	result = vkEnumeratePhysicalDevices(instanceObj.instance, &gpuDeviceCount, gpuList.data());
+	assert(result == VK_SUCCESS);
+
+	assert(gpuDeviceCount);
 
 	// Make space for retrieval
 	gpuList.resize(gpuDeviceCount);

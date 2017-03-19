@@ -22,7 +22,7 @@ private:
 public:
 	static VulkanApplication* GetInstance();
 
-		// Simple program life cycle
+	// Simple program life cycle
 	void initialize();
 	void deInitialize();
 	void prepare();
@@ -39,4 +39,7 @@ public:
 	VulkanInstance instanceObj;		// Vulkan instance object
 
 	VulkanDevice * deviceObj;
+
+private:
+	bool debugFlag;
 };
