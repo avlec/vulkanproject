@@ -36,14 +36,14 @@ public:
 	VkBool32 areLayersSupported(std::vector<const char *> & layerNames);
 	VkResult createDebugReportCallback();
 	void destroyDebugReportCallback();
-	static VKAPI_ATTR VkBool32 VKAPI_CALL debugFunction(VkDebugReportFlagsEXT msgFlags, 
-														VkDebugReportObjectTypeEXT objType, 
-														uint64_t srcObject, 
-														size_t location,
-														uint32_t msgCode, 
-														const char * layerPrefix, 
-														const char * msg, 
-														void * userData);
+	static VKAPI_ATTR VkBool32 VKAPI_CALL debugFunction(VkDebugReportFlagsEXT msgFlags,
+		VkDebugReportObjectTypeEXT objType,
+		uint64_t srcObject,
+		size_t location,
+		uint32_t msgCode,
+		const char * layerPrefix,
+		const char * msg,
+		void * userData);
 
 private:
 	PFN_vkCreateDebugReportCallbackEXT dbgCreateDebugReportCallback;

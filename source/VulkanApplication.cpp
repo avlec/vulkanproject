@@ -31,12 +31,17 @@ void VulkanApplication::initialize()
 {
 	char title[] = "Hello world.";
 
-	// Create the vulkan instance with specified layer extension names.
-	createVulkanInstance(layerNames, instanceExtensionNames, title);
-
 	// Check if the supplied layers are supported or not
 	if (debugFlag) {
 		instanceObj.layerExtension.areLayersSupported(layerNames);
+	}
+
+	// Create the vulkan instance with specified layer extension names.
+	createVulkanInstance(layerNames, instanceExtensionNames, title);
+
+	// Create the debugging report if debugging is enabled
+	if (debugFlag) {
+		instanceObj.layerExtension.createDebugReportCallback();
 	}
 
 	// Get the list of physical devices on the system

@@ -274,7 +274,7 @@ VkResult VulkanLayerAndExtension::createDebugReportCallback()
 
 	------------------------------------------------------------------------------
 	*/
-	dbgReportCreateInfo.pfnCallback =   debugFunction;
+	dbgReportCreateInfo.pfnCallback =   VulkanLayerAndExtension::debugFunction;
 	dbgReportCreateInfo.pUserData =		NULL;
 	dbgReportCreateInfo.pNext =			NULL;
 	dbgReportCreateInfo.flags =			VK_DEBUG_REPORT_WARNING_BIT_EXT |
@@ -295,7 +295,7 @@ void VulkanLayerAndExtension::destroyDebugReportCallback()
 {
 	VulkanApplication * appObj = VulkanApplication::GetInstance();
 	VkInstance & instance = appObj->instanceObj.instance;
-	dbgDestroyDebugReportCallback(instance, debugReportCallback, NULL);
+	if (debugReportCallback) {
+		dbgDestroyDebugReportCallback(instance, debugReportCallback, NULL);
+	}
 }
-
-
