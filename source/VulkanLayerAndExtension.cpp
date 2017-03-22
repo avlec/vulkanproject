@@ -131,13 +131,11 @@ VkResult VulkanLayerAndExtension::getDeviceExtensionProperties(VkPhysicalDevice 
 		layerPropertyList.push_back(layerProps);
 
 		if (layerProps.extensions.size()) {
-			for (auto j : layerProps.extensions) {
+			for (auto j : layerProps.extensions)
 				std::cout << "\t\t|\n\t\t|---[Device Extension]--> " << j.extensionName << "\n";
-			}
 		}
-		else {
+		else
 			std::cout << "\t\t|\n\t\t|---[Device Extension]--> No Extension Found.\n";
-		}
 	}
 
 	return result;
@@ -153,9 +151,8 @@ VkBool32 VulkanLayerAndExtension::areLayersSupported(std::vector<const char*>& l
 		VkBool32 isSupported = 0;
 		for (uint32_t j = 0; j < layerCount; j++) {
 			// Mark if it has been found in both lists
-			if (!strcmp(layerNames[i], layerPropertyList[j].properties.layerName)) {
+			if (!strcmp(layerNames[i], layerPropertyList[j].properties.layerName))
 				isSupported = 1;
-			}
 		}
 
 		// If it isn't supported add it to the list of things to be erased from layerNames
@@ -165,17 +162,15 @@ VkBool32 VulkanLayerAndExtension::areLayersSupported(std::vector<const char*>& l
 			unsupportedLayerNames.push_back(layerNames[i]);
 		}
 		// Otherwise print out a nice message
-		else {
+		else
 			std::cout << "Layer supported: " << layerNames[i] << std::endl;
-		}
 	}
 
 	// Itterate through the list of unsupportedLayerNames and erase them from layerNames
 	for (auto i : unsupportedLayerNames) {
 		auto it = std::find(layerNames.begin(), layerNames.end(), i);
-		if (it != layerNames.end()) {
+		if (it != layerNames.end())
 			layerNames.erase(it);
-		}
 	}
 
 	return true;
@@ -185,26 +180,27 @@ VKAPI_ATTR VkBool32 VKAPI_CALL
 VulkanLayerAndExtension::debugFunction(VkDebugReportFlagsEXT msgFlags, VkDebugReportObjectTypeEXT objType, uint64_t srcObject, size_t location, int32_t msgCode, const char * layerPrefix, const char * msg, void * userData)
 {
 	std::cout << "[VK_DEBUG_REPORT] ";
-	if (msgFlags & VK_DEBUG_REPORT_ERROR_BIT_EXT) {
+	if (msgFlags & VK_DEBUG_REPORT_ERROR_BIT_EXT)
 		std::cout << "ERROR";
-	}
-	else if (msgFlags & VK_DEBUG_REPORT_WARNING_BIT_EXT) {
+
+	else if (msgFlags & VK_DEBUG_REPORT_WARNING_BIT_EXT)
 		std::cout << "WARNING";
-	}
-	else if (msgFlags & VK_DEBUG_REPORT_INFORMATION_BIT_EXT) {
+
+	else if (msgFlags & VK_DEBUG_REPORT_INFORMATION_BIT_EXT)
 		std::cout << "INFORMATION";
-	}
-	else if (msgFlags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT) {
+
+	else if (msgFlags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT)
 		std::cout << "PERFORMANCE";
-	}
-	else if (msgFlags & VK_DEBUG_REPORT_DEBUG_BIT_EXT) {
+
+	else if (msgFlags & VK_DEBUG_REPORT_DEBUG_BIT_EXT)
 		std::cout << "DEBUG";
-	}
+
 	else {
 		// Help from stackoverflow You should probably not return VK_TRUE from the callback unless you know what you are doing. http://stackoverflow.com/users/3007154/krooze
 		return VK_TRUE;
 	}
 	std::cout << ": [" << layerPrefix << "] Code" << msgCode << ":" << msg << std::endl;
+
 	return VK_TRUE;
 }
 
@@ -243,9 +239,8 @@ VkResult VulkanLayerAndExtension::createDebugReportCallback()
 
 	// Create the debug report callback object
 	result = dbgCreateDebugReportCallback(*instance, &dbgReportCreateInfo, nullptr, &debugReportCallback);
-	if (result == VK_SUCCESS) {
+	if (result == VK_SUCCESS)
 		std::cout << "Debug report callback object created successfully.\n\n";
-	}
 
 	return result;
 }
@@ -255,7 +250,6 @@ void VulkanLayerAndExtension::destroyDebugReportCallback()
 {
 	VulkanApplication * appObj = VulkanApplication::GetInstance();
 	VkInstance & instance = appObj->instanceObj.instance;
-	if (debugReportCallback) {
+	if (debugReportCallback)
 		dbgDestroyDebugReportCallback(instance, debugReportCallback, nullptr);
-	}
 }

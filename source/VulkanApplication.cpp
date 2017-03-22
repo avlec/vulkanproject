@@ -7,12 +7,11 @@ extern std::vector<const char *> instanceExtensionNames;
 extern std::vector<const char *> layerNames;
 extern std::vector<const char *> deviceExtensionNames;
 
-VulkanApplication::VulkanApplication()
+VulkanApplication::VulkanApplication():
+deviceObj(nullptr),
+debugFlag(true)
 {
 	instanceObj.layerExtension.getInstanceLayerProperties();
-
-	deviceObj = nullptr;
-	debugFlag = true;
 }
 
 
@@ -32,34 +31,32 @@ void VulkanApplication::initialize()
 	char title[] = "Hello world.";
 
 	// Check if the supplied layers are supported or not
-	if (debugFlag) {
+	if (debugFlag)
 		instanceObj.layerExtension.areLayersSupported(layerNames);
-	}
 
 	// Create the vulkan instance with specified layer extension names.
 	createVulkanInstance(layerNames, instanceExtensionNames, title);
 
 	// Create the debugging report if debugging is enabled
-	if (debugFlag) {
+	if (debugFlag)
 		instanceObj.layerExtension.createDebugReportCallback();
-	}
 
 	// Get the list of physical devices on the system
 	std::vector<VkPhysicalDevice> gpuList;
 	enumeratePhysicalDevices(gpuList);
 
 	// This example uses only one device which is available first
-	if (gpuList.size() > 0) {
+	if (gpuList.size() > 0)
 		handShakeWithDevice(&gpuList[0], layerNames, deviceExtensionNames);
-	}
 }
 
 void VulkanApplication::deInitialize()
 {
 	deviceObj->destroyDevice();
-	if (debugFlag) {
+
+	if (debugFlag)
 		instanceObj.layerExtension.destroyDebugReportCallback();
-	}
+
 	instanceObj.destroyInstance();
 }
 
