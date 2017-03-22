@@ -232,51 +232,6 @@ VkResult VulkanLayerAndExtension::createDebugReportCallback()
 	std::cout << "GetInstanceProcAddr loaded dbgDestroyDebugReportCallback function.\n";
 
 	dbgReportCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-
-	/*
-	Only error, have no idea why it pops up cause typedef in vulkan.h should allow for it to be recognized
-
-	---- Snippets from vulkan/vulkan.h -------------------------------------------
-
-		typdef uint32_t VkBool32;
-
-		typedef VkBool32 (VKAPI_PTR *PFN_vkDebugReportCallbackEXT)(
-			VkDebugReportFlagsEXT                       flags,
-			VkDebugReportObjectTypeEXT                  objectType,
-			uint64_t                                    object,
-			size_t                                      location,
-			int32_t                                     messageCode,
-			const char*                                 pLayerPrefix,
-			const char*                                 pMessage,
-			void*                                       pUserData);
-		
-
-		typedef struct VkDebugReportCallbackCreateInfoEXT {
-			VkStructureType                 sType;
-			const void*                     pNext;
-			VkDebugReportFlagsEXT           flags;
-			PFN_vkDebugReportCallbackEXT    pfnCallback;
-			void*                           pUserData;
-		} VkDebugReportCallbackCreateInfoEXT;
-
-	----- Attempted Fixes --------------------------------------------------------
-
-		dbgReportCreateInfo.pfnCallback = (PFN_vkDebugReportCallbackEXT) debugFunction;
-			
-			and
-
-		dbgReportCreateInfo.pfnCallback = reinterpret_cast<PFN_vkDebugReportCallbackEXT>(debugFunction);
-
-		Both compile but cause a memory access violation, because typecasting fails and the Vulkan API attempts to access a broken function pointer
-
-	---- Error Message -----------------------------------------------------------
-
-	Severity	Code	Description	Project	File	Line	Source	Suppression State
-	Error	C2440	'=': cannot convert from 'VkBool32 (__cdecl *)(VkDebugReportFlagsEXT,VkDebugReportObjectTypeEXT,uint64_t,std::size_t,uint32_t,const char *,const char *,void *)'
-	to 'PFN_vkDebugReportCallbackEXT'	vulkanproject	C:\Users\Alec\workspace\cpp\vulkanproject\source\VulkanLayerAndExtension.cpp	231	Build
-
-	------------------------------------------------------------------------------
-	*/
 	dbgReportCreateInfo.pfnCallback =   VulkanLayerAndExtension::debugFunction;
 	dbgReportCreateInfo.pUserData = nullptr;
 	dbgReportCreateInfo.pNext = nullptr;
