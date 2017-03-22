@@ -1,6 +1,6 @@
 ## Vulkan Project
 
-This documents an idiot, learning the ropes to the Vulkan API from the ground up, with **_zero_** understanding of the material, following along with the book _Learning Vulkan_ by _Parminder Singh_
+This documents learning the ropes to the Vulkan API from the ground up, with **_zero_** understanding of how the 3D API works, following along with the book _Learning Vulkan_ by _Parminder Singh_
 
 Currently working on getting the basic understanding of the Vulkan API, and of graphics API concepts.
 
