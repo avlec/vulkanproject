@@ -25,7 +25,7 @@ public:
 	VkResult getInstanceLayerProperties();
 
 	// Global extensions
-	VkResult getExtensionProperties(LayerProperties &layerProps, VkPhysicalDevice * gpu = NULL);
+	VkResult getExtensionProperties(LayerProperties &layerProps, VkPhysicalDevice * gpu = nullptr);
 
 	// Device based extensions
 	VkResult getDeviceExtensionProperties(VkPhysicalDevice * gpu);
@@ -40,7 +40,7 @@ public:
 		VkDebugReportObjectTypeEXT objType,
 		uint64_t srcObject,
 		size_t location,
-		uint32_t msgCode,
+		int32_t msgCode,
 		const char * layerPrefix,
 		const char * msg,
 		void * userData);

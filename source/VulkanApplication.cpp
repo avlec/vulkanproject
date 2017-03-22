@@ -11,7 +11,7 @@ VulkanApplication::VulkanApplication()
 {
 	instanceObj.layerExtension.getInstanceLayerProperties();
 
-	deviceObj = NULL;
+	deviceObj = nullptr;
 	debugFlag = true;
 }
 
@@ -63,16 +63,22 @@ void VulkanApplication::deInitialize()
 	instanceObj.destroyInstance();
 }
 
+// ReSharper disable once CppMemberFunctionMayBeStatic
+// ReSharper disable once CppMemberFunctionMayBeConst
 void VulkanApplication::prepare()
 {
 	// Placeholder
 }
 
+// ReSharper disable once CppMemberFunctionMayBeStatic
+// ReSharper disable once CppMemberFunctionMayBeConst
 void VulkanApplication::update()
 {
 	// Placeholder
 }
 
+// ReSharper disable once CppMemberFunctionMayBeStatic
+// ReSharper disable once CppMemberFunctionMayBeConst
 bool VulkanApplication::render()
 {
 	// Placeholder
@@ -112,6 +118,7 @@ VkResult VulkanApplication::handShakeWithDevice(VkPhysicalDevice * gpu, std::vec
 	return deviceObj->createDevice(layers, extensions);
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 VkResult VulkanApplication::enumeratePhysicalDevices(std::vector<VkPhysicalDevice> & gpuList)
 {
 	// Holds the gpu count

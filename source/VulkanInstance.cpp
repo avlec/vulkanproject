@@ -1,6 +1,7 @@
 #include "..\include\VulkanInstance.h"
 
-VulkanInstance::VulkanInstance()
+VulkanInstance::VulkanInstance():
+instance(nullptr)
 {
 }
 
@@ -16,7 +17,7 @@ VkResult VulkanInstance::createInstance(std::vector<const char*>& layers, std::v
 	// Define the Vulkan app structure
 	VkApplicationInfo appInfo = {};
 	appInfo.sType =								VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	appInfo.pNext =								NULL;
+	appInfo.pNext = nullptr;
 	appInfo.pApplicationName =					appName;
 	appInfo.applicationVersion =				1;
 	appInfo.pEngineName =						appName;
@@ -31,21 +32,22 @@ VkResult VulkanInstance::createInstance(std::vector<const char*>& layers, std::v
 	instInfo.pApplicationInfo =					&appInfo;
 
 	// Specify the list of layer name to be enabled
-	instInfo.enabledLayerCount =				(uint32_t) layers.size();
+	instInfo.enabledLayerCount =				static_cast<uint32_t>(layers.size());
 	instInfo.ppEnabledLayerNames =				layers.size() ? layers.data() : NULL;
 
 	// Specify the list of extensions to be used in the app
-	instInfo.enabledExtensionCount =			(uint32_t) extensions.size();
+	instInfo.enabledExtensionCount =			static_cast<uint32_t>(extensions.size());
 	instInfo.ppEnabledExtensionNames =			extensions.size() ? extensions.data() : NULL;
 	
 	// Create the instance
-	VkResult result = vkCreateInstance(&instInfo, NULL, &instance);
+	VkResult result = vkCreateInstance(&instInfo, nullptr, &instance);
 	assert(result == VK_SUCCESS);
 
 	return result;
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void VulkanInstance::destroyInstance()
 {
-	vkDestroyInstance(instance, NULL);
+	vkDestroyInstance(instance, nullptr);
 }
