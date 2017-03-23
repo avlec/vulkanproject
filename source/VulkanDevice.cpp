@@ -93,7 +93,7 @@ uint32_t VulkanDevice::getGraphicsQueueHandle()
 		//		DMA/Transfer Queue	- VK_QUEUE_TRANSFER_BIT
 		//		Sparse memory		- VK_QUEUE_SPARSE_BINDING_BIT
 
-		if (queueFamilyProperties[i].queueFlags && VK_QUEUE_GRAPHICS_BIT) {
+		if (queueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) {
 			// 3. Get the handle/index ID of graphics queue family
 			found = true;
 			graphicsQueueIndex = i;
