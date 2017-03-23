@@ -1,9 +1,6 @@
 #include "..\include\Headers.h"
 
-#include "VulkanLayerAndExtension.h"
 #include "VulkanApplication.h"
-#include "VulkanInstance.h"
-#include "VulkanDevice.h"
 
 std::vector<const char *> instanceExtensionNames = {
 	VK_KHR_SURFACE_EXTENSION_NAME, VK_KHR_WIN32_SURFACE_EXTENSION_NAME, VK_EXT_DEBUG_REPORT_EXTENSION_NAME
