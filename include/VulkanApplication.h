@@ -2,7 +2,6 @@
 
 #include "VulkanInstance.h"
 #include "VulkanDevice.h"
-#include "VulkanLayerAndExtension.h"
 
 
 class VulkanApplication {
