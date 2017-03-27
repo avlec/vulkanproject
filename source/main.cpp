@@ -23,8 +23,8 @@ std::vector<const char *> deviceExtensionNames = {
 };
 
 int main() {
-	std::cout << "vulkanproject" << std::endl << std::endl;
-
+	std::cout << "Vulkan Project" << std::endl << std::endl;
+	
 	VulkanApplication* appObj = VulkanApplication::GetInstance();
 	appObj->initialize();
 	appObj->prepare();

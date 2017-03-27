@@ -8,14 +8,12 @@ public:
 	VulkanDevice(VkPhysicalDevice * physicalDevice);
 	~VulkanDevice();
 
-public:
 	// Device related member variables
 	VkDevice device;											// Logical Device
 	VkPhysicalDevice * gpu;										// Physical Device
 	VkPhysicalDeviceProperties gpuProperties;					// Physical Device attributes
 	VkPhysicalDeviceMemoryProperties memoryProperties;			// Physical device memory properties
 
-public:
 	// Queue
 	VkQueue queue;												// Vulkan Queues object
 	
@@ -27,7 +25,6 @@ public:
 	
 	VulkanLayerAndExtension layerExtension; // Device specific extension
 
-public:
 	VkResult createDevice(std::vector<const char *> & layers, std::vector<const char *> & extensions);
 	void destroyDevice();	 
 	
